@@ -3,11 +3,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import api from '../lib/api';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Plus, CheckCircle, XCircle, Trash2, RefreshCw, LayoutDashboard, Globe, FileText, LogOut } from 'lucide-react';
+import { Plus, CheckCircle, XCircle, Trash2, Globe, FileText, LogOut, LayoutDashboard } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
+import './Domains.css';
 
 
 interface Domain {
@@ -77,8 +76,6 @@ export default function Domains() {
         try {
             await api.post(`/domains/${id}/verify`);
             fetchDomains();
-            await api.post(`/domains/${id}/verify`);
-            fetchDomains();
             alert('Domain verified successfully! You can now start the test.');
         } catch (error: any) {
             alert(error.response?.data?.message || 'Verification failed');
@@ -106,114 +103,110 @@ export default function Domains() {
     };
 
     return (
-        <div className="flex min-h-screen bg-background text-foreground">
-            {}
-            <aside className="w-64 border-r border-border bg-card hidden md:block">
-                <div className="p-6">
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-blue-600 text-transparent bg-clip-text">
+        <div className="domains-layout">
+            <aside className="sidebar">
+                <div className="sidebar-logo">
+                    <h1 className="logo-text">
                         AlertMatrix
                     </h1>
                 </div>
-                <nav className="mt-6 space-y-2 px-4">
-                    <Link to="/dashboard" className="flex items-center gap-3 px-4 py-3 text-muted-foreground hover:bg-accent rounded-md transition-colors">
-                        <LayoutDashboard className="w-5 h-5 text-muted-foreground" />
+                <nav className="nav-menu">
+                    <Link to="/dashboard" className="nav-item-inactive">
+                        <LayoutDashboard className="nav-icon-inactive" />
                         Dashboard
                     </Link>
-                    <Link to="/domains" className="flex items-center gap-3 px-4 py-3 text-foreground bg-accent rounded-md transition-colors">
-                        <Globe className="w-5 h-5 text-primary" />
+                    <Link to="/domains" className="nav-item-active">
+                        <Globe className="nav-icon-active" />
                         Domains
                     </Link>
-                    <Link to="/reports" className="flex items-center gap-3 px-4 py-3 text-muted-foreground hover:bg-accent rounded-md transition-colors">
-                        <FileText className="w-5 h-5 text-muted-foreground" />
+                    <Link to="/reports" className="nav-item-inactive">
+                        <FileText className="nav-icon-inactive" />
                         Reports
                     </Link>
                 </nav>
-                <div className="absolute bottom-0 w-64 p-4 border-t border-border">
-                    <div className="flex items-center gap-3 px-4 py-3">
-                        <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-foreground truncate">{user?.email}</p>
-                            <p className="text-xs text-muted-foreground capitalize">{user?.subscriptionPlan} Plan</p>
+                <div className="sidebar-footer">
+                    <div className="user-profile">
+                        <div className="user-info">
+                            <p className="user-email">{user?.email}</p>
+                            <p className="user-plan">{user?.subscriptionPlan} Plan</p>
                         </div>
-                        <Button variant="ghost" size="icon" onClick={handleLogout} className="text-muted-foreground hover:text-foreground">
-                            <LogOut className="w-5 h-5" />
-                        </Button>
+                        <button onClick={handleLogout} className="logout-button">
+                            <LogOut className="icon-sm" />
+                        </button>
                     </div>
                 </div>
             </aside>
 
-            {}
-            <main className="flex-1 bg-background overflow-y-auto">
-                <header className="h-16 border-b border-border flex items-center justify-between px-8 md:px-12 bg-card/50 backdrop-blur-sm">
-                    <h2 className="text-lg font-medium text-foreground">Domain Management</h2>
+            <main className="main-content">
+                <header className="top-header">
+                    <h2 className="page-title">Domain Management</h2>
                 </header>
 
-                <div className="p-8 md:p-12 max-w-5xl mx-auto">
-                    {}
-                    <div className="bg-card p-6 rounded-lg border border-border mb-8">
-                        <h2 className="text-xl font-semibold mb-4 text-foreground">Add New Domain</h2>
-                        <form onSubmit={handleSubmit(onSubmit)} className="flex gap-4 items-start">
-                            <div className="flex-1">
-                                <Input
+                <div className="content-wrapper">
+                    <div className="add-domain-card">
+                        <h2 className="card-title">Add New Domain</h2>
+                        <form onSubmit={handleSubmit(onSubmit)} className="add-domain-form">
+                            <div className="input-container">
+                                <input
                                     {...register('domain')}
                                     placeholder="example.com"
-                                    className="bg-background border-border text-foreground placeholder:text-gray-600 focus:border-primary"
+                                    className="form-input"
                                 />
-                                {errors.domain && <p className="text-xs text-red-400 mt-1">{errors.domain.message}</p>}
+                                {errors.domain && <p className="error-message">{errors.domain.message}</p>}
                             </div>
-                            <Button type="submit" className="bg-primary hover:bg-primary/90 text-foreground">
-                                <Plus className="w-4 h-4 mr-2" /> Add Domain
-                            </Button>
+                            <button type="submit" className="add-button">
+                                <Plus className="icon-sm mr-2" /> Add Domain
+                            </button>
                         </form>
                     </div>
 
-                    {}
-                    <div className="bg-card rounded-lg border border-border overflow-hidden">
-                        <div className="p-4 border-b border-border bg-accent/50">
-                            <h3 className="font-medium text-muted-foreground">Your Domains</h3>
+                    <div className="domain-list-container">
+                        <div className="list-header">
+                            <h3 className="list-title">Your Domains</h3>
                         </div>
 
                         {loading ? (
-                            <div className="p-8 text-center text-muted-foreground">Loading domains...</div>
+                            <div className="loading-state">Loading domains...</div>
                         ) : domains.length === 0 ? (
-                            <div className="p-8 text-center text-muted-foreground">No domains added yet.</div>
+                            <div className="empty-state">No domains added yet.</div>
                         ) : (
-                            <div className="divide-y divide-border">
+                            <div className="domain-list">
                                 {domains.map((domain) => (
-                                    <div key={domain._id} className="p-4 flex items-center justify-between hover:bg-accent/30 transition-colors">
+                                    <div key={domain._id} className="domain-item">
                                         <div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-lg font-medium text-foreground">{domain.domain}</span>
+                                            <div className="domain-info-row">
+                                                <span className="domain-name">{domain.domain}</span>
                                                 {domain.isVerified ? (
-                                                    <span className="flex items-center text-xs text-green-400 bg-green-900/20 px-2 py-0.5 rounded-full border border-green-900">
-                                                        <CheckCircle className="w-3 h-3 mr-1" /> Verified
+                                                    <span className="verified-badge">
+                                                        <CheckCircle className="icon-xs mr-1" /> Verified
                                                     </span>
                                                 ) : (
-                                                    <span className="flex items-center text-xs text-yellow-400 bg-yellow-900/20 px-2 py-0.5 rounded-full border border-yellow-900">
-                                                        <XCircle className="w-3 h-3 mr-1" /> Unverified
+                                                    <span className="unverified-badge">
+                                                        <XCircle className="icon-xs mr-1" /> Unverified
                                                     </span>
                                                 )}
                                             </div>
                                             {!domain.isVerified && (
-                                                <div className="mt-2 text-sm text-muted-foreground bg-background p-2 rounded border border-border font-mono">
-                                                    TXT Record: <span className="text-yellow-500 select-all">{domain.verificationToken}</span>
+                                                <div className="verification-box">
+                                                    TXT Record: <span className="token-value">{domain.verificationToken}</span>
                                                 </div>
                                             )}
                                         </div>
 
-                                        <div className="flex items-center gap-2">
+                                        <div className="action-buttons">
                                             {domain.isVerified && (
-                                                <Button variant="secondary" size="sm" onClick={() => handleScan(domain._id)} className="bg-blue-600/10 text-blue-400 hover:bg-blue-600/20 hover:text-blue-300 border border-blue-600/20">
+                                                <button onClick={() => handleScan(domain._id)} className="test-button">
                                                     Start Security Test
-                                                </Button>
+                                                </button>
                                             )}
                                             {!domain.isVerified && (
-                                                <Button variant="secondary" size="sm" onClick={() => handleVerify(domain._id)} className="bg-yellow-600/10 text-yellow-400 hover:bg-yellow-600/20 hover:text-yellow-300 border border-yellow-600/20">
+                                                <button onClick={() => handleVerify(domain._id)} className="verify-button">
                                                     Verify DNS
-                                                </Button>
+                                                </button>
                                             )}
-                                            <Button variant="destructive" size="sm" onClick={() => handleDelete(domain._id)}>
-                                                <Trash2 className="w-4 h-4" />
-                                            </Button>
+                                            <button onClick={() => handleDelete(domain._id)} className="btn btn-destructive" style={{ padding: '0.25rem 0.5rem' }}>
+                                                <Trash2 className="icon-sm" />
+                                            </button>
                                         </div>
                                     </div>
                                 ))}

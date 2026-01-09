@@ -5,8 +5,7 @@ import { z } from 'zod';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import api from '../../lib/api';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import './RegisterPage.css';
 
 const registerSchema = z.object({
     email: z.string().email('Invalid email address'),
@@ -45,70 +44,70 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-background text-foreground">
-            <div className="w-full max-w-md p-8 space-y-6 bg-card rounded-lg shadow-xl border border-border">
-                <div className="text-center">
-                    <h1 className="text-3xl font-bold text-primary">AlertMatrix</h1>
-                    <p className="mt-2 text-muted-foreground">Create your account</p>
+        <div className="register-page">
+            <div className="register-card">
+                <div className="register-header">
+                    <h1 className="register-title">AlertMatrix</h1>
+                    <p className="register-subtitle">Create your account</p>
                 </div>
 
                 {error && (
-                    <div className="p-3 text-sm text-red-400 bg-red-900/30 border border-red-500/50 rounded-md">
+                    <div className="error-container">
                         {error}
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium text-muted-foreground">Email</label>
-                        <Input
+                <form onSubmit={handleSubmit(onSubmit)} className="register-form">
+                    <div className="form-group">
+                        <label className="form-label">Email</label>
+                        <input
                             {...register('email')}
                             placeholder="name@example.com"
-                            className="bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-primary"
+                            className="form-input"
                         />
-                        {errors.email && <p className="text-xs text-red-400">{errors.email.message}</p>}
+                        {errors.email && <p className="error-message">{errors.email.message}</p>}
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium text-muted-foreground">Mobile Number</label>
-                        <Input
+                    <div className="form-group">
+                        <label className="form-label">Mobile Number</label>
+                        <input
                             {...register('mobile')}
                             placeholder="+91 9876543210"
-                            className="bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-primary"
+                            className="form-input"
                         />
-                        {errors.mobile && <p className="text-xs text-red-400">{errors.mobile.message}</p>}
+                        {errors.mobile && <p className="error-message">{errors.mobile.message}</p>}
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium text-muted-foreground">Password</label>
-                        <Input
+                    <div className="form-group">
+                        <label className="form-label">Password</label>
+                        <input
                             {...register('password')}
                             type="password"
                             placeholder="••••••••"
-                            className="bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-primary"
+                            className="form-input"
                         />
-                        {errors.password && <p className="text-xs text-red-400">{errors.password.message}</p>}
+                        {errors.password && <p className="error-message">{errors.password.message}</p>}
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium text-muted-foreground">Confirm Password</label>
-                        <Input
+                    <div className="form-group">
+                        <label className="form-label">Confirm Password</label>
+                        <input
                             {...register('confirmPassword')}
                             type="password"
                             placeholder="••••••••"
-                            className="bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-primary"
+                            className="form-input"
                         />
-                        {errors.confirmPassword && <p className="text-xs text-red-400">{errors.confirmPassword.message}</p>}
+                        {errors.confirmPassword && <p className="error-message">{errors.confirmPassword.message}</p>}
                     </div>
 
-                    <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-foreground" disabled={loading}>
+                    <button type="submit" className="submit-button" disabled={loading}>
                         {loading ? 'Creating Account...' : 'Create Account'}
-                    </Button>
+                    </button>
                 </form>
 
-                <div className="text-center text-sm text-muted-foreground">
+                <div className="register-footer">
                     Already have an account?{' '}
-                    <Link to="/login" className="text-primary hover:text-primary/80">
+                    <Link to="/login" className="login-link">
                         Sign in
                     </Link>
                 </div>
