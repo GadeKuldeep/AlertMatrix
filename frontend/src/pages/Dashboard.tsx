@@ -14,7 +14,7 @@ export default function Dashboard() {
 
     return (
         <div className="flex min-h-screen bg-background text-foreground">
-            {/* Sidebar */}
+            {}
             <aside className="w-64 border-r border-border bg-card hidden md:block">
                 <div className="p-6">
                     <h1 className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-sky-600 text-transparent bg-clip-text">
@@ -48,17 +48,17 @@ export default function Dashboard() {
                 </div>
             </aside>
 
-            {/* Main Content */}
+            {}
             <main className="flex-1 bg-background">
                 <header className="h-16 border-b border-border flex items-center justify-between px-8 md:px-12 bg-card/50 backdrop-blur-sm">
                     <h2 className="text-lg font-medium text-foreground">Dashboard Overview</h2>
                     <div className="md:hidden">
-                        {/* Mobile Menu Trigger would go here */}
+                        {}
                     </div>
                 </header>
 
                 <div className="p-8 md:p-12 max-w-7xl mx-auto space-y-8">
-                    {/* Stats Grid */}
+                    {}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="bg-card p-6 rounded-xl border border-border shadow-sm relative overflow-hidden group">
                             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
@@ -95,7 +95,7 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    {/* Quick Actions */}
+                    {}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="bg-card rounded-xl border border-border p-6">
                             <h3 className="text-lg font-medium text-foreground mb-4">Quick Actions</h3>

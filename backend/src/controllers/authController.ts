@@ -9,7 +9,7 @@ const generateToken = (id: string) => {
     });
 };
 
-// Validation Schemas
+
 const registerSchema = z.object({
     email: z.string().email(),
     password: z.string().min(6),
@@ -21,9 +21,9 @@ const loginSchema = z.object({
     password: z.string(),
 });
 
-// @desc    Register a new user
-// @route   POST /api/auth/register
-// @access  Public
+
+
+
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password, mobile } = registerSchema.parse(req.body);
@@ -62,9 +62,9 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
     }
 };
 
-// @desc    Auth user & get token
-// @route   POST /api/auth/login
-// @access  Public
+
+
+
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password } = loginSchema.parse(req.body);

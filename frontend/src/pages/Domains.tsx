@@ -9,7 +9,7 @@ import { Plus, CheckCircle, XCircle, Trash2, RefreshCw, LayoutDashboard, Globe, 
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 
-// ... (keep interfaces and schema same)
+
 interface Domain {
     _id: string;
     domain: string;
@@ -22,12 +22,10 @@ const domainSchema = z.object({
     domain: z.string()
         .transform((val) => {
             try {
-                // If it doesn't have a protocol, add one for URL parsing
                 const urlStr = val.match(/^https?:\/\//) ? val : `https://${val}`;
                 const url = new URL(urlStr);
                 return url.hostname;
             } catch {
-                // Fallback to simple cleaning if URL parsing fails
                 return val.toLowerCase().trim().replace(/^https?:\/\//, '').split('/')[0];
             }
         })
@@ -109,7 +107,7 @@ export default function Domains() {
 
     return (
         <div className="flex min-h-screen bg-background text-foreground">
-            {/* Sidebar */}
+            {}
             <aside className="w-64 border-r border-border bg-card hidden md:block">
                 <div className="p-6">
                     <h1 className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-blue-600 text-transparent bg-clip-text">
@@ -143,14 +141,14 @@ export default function Domains() {
                 </div>
             </aside>
 
-            {/* Main Content */}
+            {}
             <main className="flex-1 bg-background overflow-y-auto">
                 <header className="h-16 border-b border-border flex items-center justify-between px-8 md:px-12 bg-card/50 backdrop-blur-sm">
                     <h2 className="text-lg font-medium text-foreground">Domain Management</h2>
                 </header>
 
                 <div className="p-8 md:p-12 max-w-5xl mx-auto">
-                    {/* Add Domain Form */}
+                    {}
                     <div className="bg-card p-6 rounded-lg border border-border mb-8">
                         <h2 className="text-xl font-semibold mb-4 text-foreground">Add New Domain</h2>
                         <form onSubmit={handleSubmit(onSubmit)} className="flex gap-4 items-start">
@@ -168,7 +166,7 @@ export default function Domains() {
                         </form>
                     </div>
 
-                    {/* Domain List */}
+                    {}
                     <div className="bg-card rounded-lg border border-border overflow-hidden">
                         <div className="p-4 border-b border-border bg-accent/50">
                             <h3 className="font-medium text-muted-foreground">Your Domains</h3>

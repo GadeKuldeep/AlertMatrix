@@ -34,7 +34,7 @@ const domainSchema = new mongoose.Schema({
     },
 });
 
-// Compound index to ensure unique domains per user
+
 domainSchema.index({ user: 1, domain: 1 }, { unique: true });
 
 const Domain = mongoose.model('Domain', domainSchema);

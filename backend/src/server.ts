@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/alertmatrix';
 
-// Middleware
+
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
@@ -25,12 +25,12 @@ app.use('/api/auth', authRoutes);
 app.use('/api/domains', domainRoutes);
 app.use('/api/scans', scanRoutes);
 
-// Routes
+
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', service: 'AlertMatrix Backend' });
 });
 
-// Database Connection
+
 mongoose.connect(MONGO_URI)
     .then(() => {
         console.log('✅ Connected to MongoDB');

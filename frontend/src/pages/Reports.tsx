@@ -61,7 +61,7 @@ export default function Reports() {
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">
-      {/* Sidebar */}
+      {}
       <aside className="w-64 border-r border-border bg-card hidden md:block">
         <div className="p-6">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-sky-600 text-transparent bg-clip-text">
@@ -95,7 +95,7 @@ export default function Reports() {
         </div>
       </aside>
 
-      {/* Main Content */}
+      {}
       <main className="flex-1 bg-background overflow-y-auto">
         <header className="h-16 border-b border-border flex items-center justify-between px-8 md:px-12 bg-card/50 backdrop-blur-sm">
           <h2 className="text-lg font-medium text-foreground">Security Reports</h2>

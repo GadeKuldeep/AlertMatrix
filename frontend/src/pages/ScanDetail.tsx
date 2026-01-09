@@ -30,7 +30,6 @@ export default function ScanReportDetail() {
     if (loading) return <div className="min-h-screen bg-background text-white flex items-center justify-center">Loading Report...</div>;
     if (!scan) return <div className="min-h-screen bg-background text-white flex items-center justify-center">Report not found</div>;
 
-    // --- Helpers for Dynamic Content ---
     const getStatusColor = (score: number) => {
         if (score <= 30) return 'text-green-500';
         if (score <= 70) return 'text-yellow-500';
@@ -45,7 +44,6 @@ export default function ScanReportDetail() {
 
     const countSeverity = (severity: string) => scan.findings.filter((f: any) => f.severity === severity).length;
 
-    // Enrich findings with static advice if missing from backend
     const enrichedFindings = scan.findings.map((f: any) => {
         let advice = {
             why: "This vulnerability exposes your users to potential attacks.",
@@ -66,7 +64,7 @@ export default function ScanReportDetail() {
 
     return (
         <div className="min-h-screen bg-background text-foreground font-sans">
-            {/* 1. Report Header */}
+            {}
             <header className="bg-card border-b border-border p-8 print:p-0">
                 <div className="max-w-5xl mx-auto">
                     <div className="flex justify-between items-start mb-6">
@@ -113,7 +111,7 @@ export default function ScanReportDetail() {
 
             <main className="max-w-5xl mx-auto p-8 space-y-12">
 
-                {/* 2. Executive Summary */}
+                {}
                 <section>
                     <h2 className="text-xl font-bold border-b-2 border-primary pb-2 mb-6">2. Executive Summary</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -161,7 +159,7 @@ export default function ScanReportDetail() {
                     </div>
                 </section>
 
-                {/* 3. Scope */}
+                {}
                 <section>
                     <h2 className="text-xl font-bold border-b-2 border-primary pb-2 mb-6">3. Scan Scope & Methodology</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -187,7 +185,7 @@ export default function ScanReportDetail() {
                     </div>
                 </section>
 
-                {/* 4. Infrastructure Overview */}
+                {}
                 <section>
                     <h2 className="text-xl font-bold border-b-2 border-primary pb-2 mb-6">4. Domain & Infrastructure Overview</h2>
                     <table className="w-full text-sm border border-border">
@@ -215,7 +213,7 @@ export default function ScanReportDetail() {
                     </table>
                 </section>
 
-                {/* 6. Detailed Findings */}
+                {}
                 <section>
                     <h2 className="text-xl font-bold border-b-2 border-primary pb-2 mb-6">6. Detailed Findings</h2>
 
@@ -265,7 +263,7 @@ export default function ScanReportDetail() {
                     )}
                 </section>
 
-                {/* 10. Disclaimer */}
+                {}
                 <section className="bg-card p-8 border-t-2 border-border mt-12 text-sm text-muted-foreground text-justify">
                     <h4 className="font-bold text-muted-foreground mb-2 uppercase flex items-center gap-2"><Shield className="w-4 h-4" /> Disclaimer</h4>
                     <p>
@@ -275,7 +273,7 @@ export default function ScanReportDetail() {
                     </p>
                 </section>
 
-                {/* 11. Contact */}
+                {}
                 <footer className="text-center pt-8 border-t border-border">
                     <p className="font-semibold text-foreground">AlertMatrix Security</p>
                     <p className="text-sm text-primary">support@alertmatrix.in | alertmatrix.in</p>

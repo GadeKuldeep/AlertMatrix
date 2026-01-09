@@ -3,12 +3,9 @@ import requests
 def check_security_headers(domain: str):
     try:
         url = f"https://{domain}"
-        # Follow redirects to get final headers
-        response = requests.get(url, timeout=5, verify=False) 
-        
+        response = requests.get(url, timeout=5, verify=False)
         headers = response.headers
         missing = []
-        
         required = {
             "Strict-Transport-Security": "HSTS",
             "X-Frame-Options": "Clickjacking Protection",
@@ -17,18 +14,14 @@ def check_security_headers(domain: str):
             "Referrer-Policy": "Information Leakage Protection",
             "Permissions-Policy": "feature access"
         }
-        
         present = {}
         for header, desc in required.items():
             if header in headers:
                 present[header] = headers[header]
             else:
                 missing.append(header)
-                
-        # Server disclosure
         server_header = headers.get("Server", None)
         x_powered_by = headers.get("X-Powered-By", None)
-        
         return {
             "present_headers": present,
             "missing_headers": missing,

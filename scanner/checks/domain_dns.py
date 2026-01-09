@@ -8,11 +8,9 @@ from datetime import datetime
 def check_domain_whois(domain: str):
     try:
         w = whois.whois(domain)
-        # Handle different date formats or list of dates
         expiration_date = w.expiration_date
         if isinstance(expiration_date, list):
             expiration_date = expiration_date[0]
-        
         days_to_expire = None
         if expiration_date:
             days_to_expire = (expiration_date - datetime.now()).days
@@ -40,7 +38,6 @@ def check_dns_records(domain: str):
 
 def check_dnssec(domain: str):
     try:
-        # Basic check: request DNSKEY
         answers = dns.resolver.resolve(domain, 'DNSKEY')
         return {"enabled": True, "details": f"Found {len(answers)} DNSKEY records"}
     except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN):
@@ -49,7 +46,6 @@ def check_dnssec(domain: str):
         return {"enabled": False, "error": str(e)}
 
 def check_dangling_dns(domain: str):
-    # Logic: Check if CNAME points to NXDOMAIN
     try:
         answers = dns.resolver.resolve(domain, 'CNAME')
         for r in answers:
@@ -85,7 +81,6 @@ def check_spf_dmarc(domain: str):
     }
 
 def check_subdomains(domain: str):
-    # Basic enumeration of common subdomains
     subdomains = ["www", "mail", "api", "dev", "test", "stage", "app", "blog", "shop", "admin"]
     found = []
     for sub in subdomains:
