@@ -45,11 +45,11 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-            <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-lg shadow-xl border border-gray-700">
+        <div className="flex items-center justify-center min-h-screen bg-background text-foreground">
+            <div className="w-full max-w-md p-8 space-y-6 bg-card rounded-lg shadow-xl border border-border">
                 <div className="text-center">
-                    <h1 className="text-3xl font-bold text-blue-500">AlertMatrix</h1>
-                    <p className="mt-2 text-gray-400">Create your account</p>
+                    <h1 className="text-3xl font-bold text-primary">AlertMatrix</h1>
+                    <p className="mt-2 text-muted-foreground">Create your account</p>
                 </div>
 
                 {error && (
@@ -60,55 +60,55 @@ export default function RegisterPage() {
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-300">Email</label>
+                        <label className="text-sm font-medium text-muted-foreground">Email</label>
                         <Input
                             {...register('email')}
                             placeholder="name@example.com"
-                            className="bg-gray-900 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-500"
+                            className="bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-primary"
                         />
                         {errors.email && <p className="text-xs text-red-400">{errors.email.message}</p>}
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-300">Mobile Number</label>
+                        <label className="text-sm font-medium text-muted-foreground">Mobile Number</label>
                         <Input
                             {...register('mobile')}
                             placeholder="+91 9876543210"
-                            className="bg-gray-900 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-500"
+                            className="bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-primary"
                         />
                         {errors.mobile && <p className="text-xs text-red-400">{errors.mobile.message}</p>}
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-300">Password</label>
+                        <label className="text-sm font-medium text-muted-foreground">Password</label>
                         <Input
                             {...register('password')}
                             type="password"
                             placeholder="••••••••"
-                            className="bg-gray-900 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-500"
+                            className="bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-primary"
                         />
                         {errors.password && <p className="text-xs text-red-400">{errors.password.message}</p>}
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-300">Confirm Password</label>
+                        <label className="text-sm font-medium text-muted-foreground">Confirm Password</label>
                         <Input
                             {...register('confirmPassword')}
                             type="password"
                             placeholder="••••••••"
-                            className="bg-gray-900 border-gray-700 text-white placeholder:text-gray-500 focus:border-blue-500"
+                            className="bg-background border-border text-foreground placeholder:text-muted-foreground focus:border-primary"
                         />
                         {errors.confirmPassword && <p className="text-xs text-red-400">{errors.confirmPassword.message}</p>}
                     </div>
 
-                    <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white" disabled={loading}>
+                    <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-foreground" disabled={loading}>
                         {loading ? 'Creating Account...' : 'Create Account'}
                     </Button>
                 </form>
 
-                <div className="text-center text-sm text-gray-400">
+                <div className="text-center text-sm text-muted-foreground">
                     Already have an account?{' '}
-                    <Link to="/login" className="text-blue-400 hover:text-blue-300">
+                    <Link to="/login" className="text-primary hover:text-primary/80">
                         Sign in
                     </Link>
                 </div>

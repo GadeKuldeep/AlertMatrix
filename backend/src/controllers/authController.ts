@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
 import jwt from 'jsonwebtoken';
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
 
 const generateToken = (id: string) => {
     return jwt.sign({ id }, process.env.JWT_SECRET || 'secret', {
@@ -52,9 +52,9 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
         } else {
             res.status(400).json({ message: 'Invalid user data' });
         }
-    } catch (error: any) {
-        if (error instanceof z.ZodError) {
-            const errorMessage = (error as z.ZodError).errors.map((e: any) => e.message).join(', ');
+    } catch (error: unknown) {
+        if (error instanceof ZodError) {
+            const errorMessage = error.errors.map((e) => e.message).join(', ');
             res.status(400).json({ message: errorMessage });
         } else {
             res.status(500).json({ message: (error as Error).message });
@@ -71,9 +71,6 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
         const user = await User.findOne({ email });
 
-        // Use built-in method but TypeScript needs casting or interface extension. 
-        // For simplicity, we cast user to any or extend interface later.
-        // Here we assume method exists because schema defined it.
         if (user && (await (user as any).matchPassword(password))) {
             res.json({
                 _id: user._id,
@@ -85,9 +82,9 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         } else {
             res.status(401).json({ message: 'Invalid email or password' });
         }
-    } catch (error: any) {
-        if (error instanceof z.ZodError) {
-            const errorMessage = (error as z.ZodError).errors.map((e: any) => e.message).join(', ');
+    } catch (error: unknown) {
+        if (error instanceof ZodError) {
+            const errorMessage = error.errors.map((e) => e.message).join(', ');
             res.status(400).json({ message: errorMessage });
         } else {
             res.status(500).json({ message: (error as Error).message });

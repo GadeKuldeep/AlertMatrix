@@ -22,6 +22,7 @@ const scanSchema = new mongoose.Schema({
         max: 100,
     },
     findings: [{
+        category: String,
         severity: {
             type: String,
             enum: ['critical', 'high', 'medium', 'low', 'info'],

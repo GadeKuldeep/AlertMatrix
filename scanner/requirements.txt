@@ -2,8 +2,9 @@ fastapi
 uvicorn
 requests
 python-whois
-ssl
-socket
 dnspython
 pymongo
 python-dotenv
+cryptography
+beautifulsoup4
+aiohttp

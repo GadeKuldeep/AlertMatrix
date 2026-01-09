@@ -108,35 +108,35 @@ export default function Domains() {
     };
 
     return (
-        <div className="flex min-h-screen bg-gray-950 text-white">
+        <div className="flex min-h-screen bg-background text-foreground">
             {/* Sidebar */}
-            <aside className="w-64 border-r border-gray-800 bg-gray-900 hidden md:block">
+            <aside className="w-64 border-r border-border bg-card hidden md:block">
                 <div className="p-6">
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-indigo-500 text-transparent bg-clip-text">
+                    <h1 className="text-2xl font-bold bg-gradient-to-r from-sky-400 to-blue-600 text-transparent bg-clip-text">
                         AlertMatrix
                     </h1>
                 </div>
                 <nav className="mt-6 space-y-2 px-4">
-                    <Link to="/dashboard" className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-800 rounded-md transition-colors">
-                        <LayoutDashboard className="w-5 h-5 text-gray-400" />
+                    <Link to="/dashboard" className="flex items-center gap-3 px-4 py-3 text-muted-foreground hover:bg-accent rounded-md transition-colors">
+                        <LayoutDashboard className="w-5 h-5 text-muted-foreground" />
                         Dashboard
                     </Link>
-                    <Link to="/domains" className="flex items-center gap-3 px-4 py-3 text-white bg-gray-800 rounded-md transition-colors">
-                        <Globe className="w-5 h-5 text-purple-400" />
+                    <Link to="/domains" className="flex items-center gap-3 px-4 py-3 text-foreground bg-accent rounded-md transition-colors">
+                        <Globe className="w-5 h-5 text-primary" />
                         Domains
                     </Link>
-                    <Link to="/reports" className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-800 rounded-md transition-colors">
-                        <FileText className="w-5 h-5 text-gray-400" />
+                    <Link to="/reports" className="flex items-center gap-3 px-4 py-3 text-muted-foreground hover:bg-accent rounded-md transition-colors">
+                        <FileText className="w-5 h-5 text-muted-foreground" />
                         Reports
                     </Link>
                 </nav>
-                <div className="absolute bottom-0 w-64 p-4 border-t border-gray-800">
+                <div className="absolute bottom-0 w-64 p-4 border-t border-border">
                     <div className="flex items-center gap-3 px-4 py-3">
                         <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-white truncate">{user?.email}</p>
-                            <p className="text-xs text-gray-500 capitalize">{user?.subscriptionPlan} Plan</p>
+                            <p className="text-sm font-medium text-foreground truncate">{user?.email}</p>
+                            <p className="text-xs text-muted-foreground capitalize">{user?.subscriptionPlan} Plan</p>
                         </div>
-                        <Button variant="ghost" size="icon" onClick={handleLogout} className="text-gray-400 hover:text-white">
+                        <Button variant="ghost" size="icon" onClick={handleLogout} className="text-muted-foreground hover:text-foreground">
                             <LogOut className="w-5 h-5" />
                         </Button>
                     </div>
@@ -144,47 +144,47 @@ export default function Domains() {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 bg-gray-950 overflow-y-auto">
-                <header className="h-16 border-b border-gray-800 flex items-center justify-between px-8 md:px-12 bg-gray-900/50 backdrop-blur-sm">
-                    <h2 className="text-lg font-medium text-white">Domain Management</h2>
+            <main className="flex-1 bg-background overflow-y-auto">
+                <header className="h-16 border-b border-border flex items-center justify-between px-8 md:px-12 bg-card/50 backdrop-blur-sm">
+                    <h2 className="text-lg font-medium text-foreground">Domain Management</h2>
                 </header>
 
                 <div className="p-8 md:p-12 max-w-5xl mx-auto">
                     {/* Add Domain Form */}
-                    <div className="bg-gray-900 p-6 rounded-lg border border-gray-800 mb-8">
-                        <h2 className="text-xl font-semibold mb-4 text-white">Add New Domain</h2>
+                    <div className="bg-card p-6 rounded-lg border border-border mb-8">
+                        <h2 className="text-xl font-semibold mb-4 text-foreground">Add New Domain</h2>
                         <form onSubmit={handleSubmit(onSubmit)} className="flex gap-4 items-start">
                             <div className="flex-1">
                                 <Input
                                     {...register('domain')}
                                     placeholder="example.com"
-                                    className="bg-gray-950 border-gray-700 text-white placeholder:text-gray-600 focus:border-purple-500"
+                                    className="bg-background border-border text-foreground placeholder:text-gray-600 focus:border-primary"
                                 />
                                 {errors.domain && <p className="text-xs text-red-400 mt-1">{errors.domain.message}</p>}
                             </div>
-                            <Button type="submit" className="bg-purple-600 hover:bg-purple-700 text-white">
+                            <Button type="submit" className="bg-primary hover:bg-primary/90 text-foreground">
                                 <Plus className="w-4 h-4 mr-2" /> Add Domain
                             </Button>
                         </form>
                     </div>
 
                     {/* Domain List */}
-                    <div className="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden">
-                        <div className="p-4 border-b border-gray-800 bg-gray-800/50">
-                            <h3 className="font-medium text-gray-300">Your Domains</h3>
+                    <div className="bg-card rounded-lg border border-border overflow-hidden">
+                        <div className="p-4 border-b border-border bg-accent/50">
+                            <h3 className="font-medium text-muted-foreground">Your Domains</h3>
                         </div>
 
                         {loading ? (
-                            <div className="p-8 text-center text-gray-500">Loading domains...</div>
+                            <div className="p-8 text-center text-muted-foreground">Loading domains...</div>
                         ) : domains.length === 0 ? (
-                            <div className="p-8 text-center text-gray-500">No domains added yet.</div>
+                            <div className="p-8 text-center text-muted-foreground">No domains added yet.</div>
                         ) : (
-                            <div className="divide-y divide-gray-800">
+                            <div className="divide-y divide-border">
                                 {domains.map((domain) => (
-                                    <div key={domain._id} className="p-4 flex items-center justify-between hover:bg-gray-800/30 transition-colors">
+                                    <div key={domain._id} className="p-4 flex items-center justify-between hover:bg-accent/30 transition-colors">
                                         <div>
                                             <div className="flex items-center gap-2">
-                                                <span className="text-lg font-medium text-white">{domain.domain}</span>
+                                                <span className="text-lg font-medium text-foreground">{domain.domain}</span>
                                                 {domain.isVerified ? (
                                                     <span className="flex items-center text-xs text-green-400 bg-green-900/20 px-2 py-0.5 rounded-full border border-green-900">
                                                         <CheckCircle className="w-3 h-3 mr-1" /> Verified
@@ -196,7 +196,7 @@ export default function Domains() {
                                                 )}
                                             </div>
                                             {!domain.isVerified && (
-                                                <div className="mt-2 text-sm text-gray-400 bg-gray-950 p-2 rounded border border-gray-800 font-mono">
+                                                <div className="mt-2 text-sm text-muted-foreground bg-background p-2 rounded border border-border font-mono">
                                                     TXT Record: <span className="text-yellow-500 select-all">{domain.verificationToken}</span>
                                                 </div>
                                             )}
