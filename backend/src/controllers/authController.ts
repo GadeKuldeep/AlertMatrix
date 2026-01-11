@@ -54,7 +54,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
         }
     } catch (error: unknown) {
         if (error instanceof ZodError) {
-            const errorMessage = error.errors.map((e) => e.message).join(', ');
+            const errorMessage = error.issues.map((e: any) => e.message).join(', ');
             res.status(400).json({ message: errorMessage });
         } else {
             res.status(500).json({ message: (error as Error).message });
@@ -84,7 +84,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         }
     } catch (error: unknown) {
         if (error instanceof ZodError) {
-            const errorMessage = error.errors.map((e) => e.message).join(', ');
+            const errorMessage = error.issues.map((e: any) => e.message).join(', ');
             res.status(400).json({ message: errorMessage });
         } else {
             res.status(500).json({ message: (error as Error).message });

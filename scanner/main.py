@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import uvicorn
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 
 
@@ -183,7 +183,7 @@ async def perform_scan(request: ScanRequest):
         "risk_score": risk_score,
         "findings": findings,
         "details": full_results,
-        "timestamp": datetime.utcnow().isoformat()
+        "timestamp": datetime.now(timezone.utc).isoformat()
     }
 
 if __name__ == "__main__":

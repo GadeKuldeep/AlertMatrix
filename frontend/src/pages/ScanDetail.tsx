@@ -43,7 +43,7 @@ export default function ScanReportDetail() {
     const countSeverity = (severity: string) => scan.findings.filter((f: any) => f.severity === severity).length;
 
     const enrichedFindings = scan.findings.map((f: any) => {
-        let advice = {
+        const advice = {
             why: "This vulnerability exposes your users to potential attacks.",
             rec: "Remediate this issue according to standard security practices."
         };
