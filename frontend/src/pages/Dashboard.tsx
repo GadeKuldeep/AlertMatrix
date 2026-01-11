@@ -49,7 +49,7 @@ export default function Dashboard() {
 
             <main className="main-content">
                 <header className="top-header">
-                    <h2 className="page-title">Dashboard Overview</h2>
+                    <h2 className="page-title">Dashboard</h2>
                     <div className="md:hidden">
                         { }
                     </div>
