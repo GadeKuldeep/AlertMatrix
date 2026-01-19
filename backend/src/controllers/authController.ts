@@ -47,6 +47,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
                 email: user.email,
                 mobile: user.mobile,
                 subscriptionPlan: user.subscriptionPlan,
+                termsAccepted: user.termsAccepted,
                 token: generateToken(user._id.toString()),
             });
         } else {
@@ -77,6 +78,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
                 email: user.email,
                 mobile: user.mobile,
                 subscriptionPlan: user.subscriptionPlan,
+                termsAccepted: user.termsAccepted,
                 token: generateToken(user._id.toString()),
             });
         } else {
@@ -89,5 +91,31 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         } else {
             res.status(500).json({ message: (error as Error).message });
         }
+    }
+};
+
+export const acceptTerms = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const userId = (req as any).user?._id;
+        if (!userId) {
+            res.status(401).json({ message: 'Not authorized' });
+            return;
+        }
+
+        const user = await User.findById(userId);
+        if (!user) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+
+        user.termsAccepted = true;
+        await user.save();
+
+        res.json({
+            message: 'Terms accepted successfully',
+            termsAccepted: user.termsAccepted,
+        });
+    } catch (error: unknown) {
+        res.status(500).json({ message: (error as Error).message });
     }
 };

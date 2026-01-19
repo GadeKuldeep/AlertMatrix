@@ -7,6 +7,7 @@ import Domains from './pages/Domains';
 import Reports from './pages/Reports';
 import ScanDetail from './pages/ScanDetail';
 import { useAuthStore } from './store/authStore';
+import TermsModal from './components/TermsModal';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const token = useAuthStore((state) => state.token);
@@ -27,6 +28,7 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
 function App() {
   return (
     <Router>
+      <TermsModal />
       <Routes>
         <Route path="/login" element={
           <PublicRoute>

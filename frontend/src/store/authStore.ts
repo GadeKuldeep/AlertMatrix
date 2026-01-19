@@ -6,6 +6,7 @@ interface User {
     email: string;
     mobile: string;
     subscriptionPlan: string;
+    termsAccepted: boolean;
 }
 
 interface AuthState {
