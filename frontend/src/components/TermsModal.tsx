@@ -1,6 +1,7 @@
 import React from 'react';
 import './TermsModal.css';
 import { useAuthStore } from '../store/authStore';
+import api from '../lib/api';
 
 const TermsModal: React.FC = () => {
     const { user, token, setCredentials } = useAuthStore();
@@ -9,16 +10,9 @@ const TermsModal: React.FC = () => {
 
     const handleAccept = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/auth/accept-terms', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const response = await api.post('/auth/accept-terms');
 
-            if (response.ok) {
-                await response.json();
+            if (response.status === 200) {
                 setCredentials({ ...user, termsAccepted: true }, token!);
             }
         } catch (error) {

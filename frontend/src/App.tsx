@@ -10,9 +10,12 @@ import { useAuthStore } from './store/authStore';
 import TermsModal from './components/TermsModal';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const token = useAuthStore((state) => state.token);
+  const { token, user } = useAuthStore();
   if (!token) {
     return <Navigate to="/login" replace />;
+  }
+  if (user && !user.termsAccepted) {
+    return <TermsModal />;
   }
   return children;
 };
@@ -28,7 +31,6 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
 function App() {
   return (
     <Router>
-      <TermsModal />
       <Routes>
         <Route path="/login" element={
           <PublicRoute>
