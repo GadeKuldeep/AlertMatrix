@@ -44,18 +44,32 @@ export default function ScanReportDetail() {
 
     const enrichedFindings = scan.findings.map((f: any) => {
         const advice = {
-            why: "This vulnerability exposes your users to potential attacks.",
+            why: "This vulnerability exposes your users to potential attacks and indicates a security misconfiguration.",
             rec: "Remediate this issue according to standard security practices."
         };
-        if (f.title.includes('SSL')) {
-            advice.why = "Expired or invalid certificates break trust, expose users to man-in-the-middle attacks, and negatively impact SEO.";
-            advice.rec = "Renew the SSL certificate immediately and configure automatic renewal.";
-        } else if (f.title.includes('Headers')) {
-            advice.why = "Missing headers increase exposure to clickjacking and XSS attacks.";
-            advice.rec = "Configure the web server to include recommended HTTP security headers.";
-        } else if (f.title.includes('Port') || f.title.includes('HTTP')) {
-            advice.why = "Unencrypted communication allows attackers to intercept sensitive data.";
-            advice.rec = "Close unnecessary ports and enforce HTTPS.";
+        const title = f.title.toUpperCase();
+
+        if (title.includes('SSL') || title.includes('TLS')) {
+            advice.why = "Valid certificates directly impact data privacy, user trust, and SEO. Invalid or expired certificates break encryption, expose users to man-in-the-middle attacks, and cause browser warnings that damage your brand.";
+            advice.rec = "Renew the certificate immediately and configure automatic renewal to ensure continuous secure communication.";
+        } else if (title.includes('HEADER')) {
+            advice.why = "Security headers are your browser's first line of defense. Missing headers (like HSTS, CSP, or X-Frame-Options) leave users vulnerable to session hijacking, clickjacking, and cross-site scripting (XSS).";
+            advice.rec = "Configure the web server to include recommended HTTP security headers to enforce strict browser-side security.";
+        } else if (title.includes('PORT')) {
+            advice.why = "Unexpectedly open ports are 'low-hanging fruit' for automated scans. They may expose administrative interfaces or internal services that should not be visible to the public internet.";
+            advice.rec = "Close unnecessary ports and implement strict firewall rules to minimize your external attack surface.";
+        } else if (title.includes('SPF') || title.includes('DKIM') || title.includes('DMARC') || title.includes('EMAIL')) {
+            advice.why = "Missing email security records allow attackers to spoof your domain and send malicious emails in your name. This leads to brand damage, phishing attacks, and poor email deliverability.";
+            advice.rec = "Implement valid SPF, DKIM, and DMARC records in your DNS settings to authenticate your outgoing mail.";
+        } else if (title.includes('DNS') || title.includes('RECORDS')) {
+            advice.why = "DNS misconfigurations can lead to service outages, subdomain takeover, or traffic interception. Proper DNS management is critical for site availability and routing integrity.";
+            advice.rec = "Review your DNS zone file, remove stale records, and ensure nameserver configurations follow best practices.";
+        } else if (title.includes('VERSION') || title.includes('SERVER')) {
+            advice.why = "Revealing exact software versions or verbose error messages aids attackers during reconnaissance, allowing them to target specific known vulnerabilities in your infrastructure.";
+            advice.rec = "Disable server signatures and configure custom error pages to prevent information leakage to potential attackers.";
+        } else if (title.includes('AVAILABILITY') || title.includes('HTTP')) {
+            advice.why = "Service availability is the most basic measure of business continuity. Unencrypted HTTP traffic or unexpected downtime leads to lost revenue and severe reputation damage.";
+            advice.rec = "Ensure 24/7 monitoring is active and enforce HTTPS-only traffic for all web services.";
         }
         return { ...f, ...advice };
     });
@@ -206,6 +220,51 @@ export default function ScanReportDetail() {
                     </table>
                 </section>
 
+                <section className="why-matters-detailed-section">
+                    <h2 className="section-title">5. Why Each Component of this Scan Matters</h2>
+                    <div className="why-matters-text">
+                        <p className="intro-text">
+                            Based on a comprehensive analysis of cybersecurity principles, threat landscapes, and operational best practices,
+                            this scan serves as a <strong>foundational security and operational health assessment</strong>.
+                            It identifies critical, often overlooked weaknesses that are the most common causes of outages and breaches.
+                        </p>
+
+                        <div className="why-grid">
+                            <div className="why-card">
+                                <h3>1. Website Availability Monitoring</h3>
+                                <p><strong>Significance:</strong> This is the most basic measure of your <strong>business continuity and reputation</strong>. If your website or web service is down, you are losing revenue and damaging customer trust. Reliability is as crucial as security.</p>
+                            </div>
+
+                            <div className="why-card">
+                                <h3>2. SSL/TLS Certificate Validation</h3>
+                                <p><strong>Significance:</strong> Directly impacts <strong>data privacy and SEO</strong>. Valid certificates ensure data is encrypted and prevent browsers from warning users away with "Not Secure" alerts, which cause immediate abandonment.</p>
+                            </div>
+
+                            <div className="why-card">
+                                <h3>3. Open Common Port Detection</h3>
+                                <p><strong>Significance:</strong> Identifies <strong>exposure and misconfiguration</strong>. Unexpectedly open ports (like 8080/8443) are low-hanging fruit for attackers, often revealing internal management panels or administrative interfaces.</p>
+                            </div>
+
+                            <div className="why-card">
+                                <h3>4. HTTP Security Header Analysis</h3>
+                                <p><strong>Significance:</strong> These are your <strong>browser's first line of defense</strong>. They are critical for client-side security, protecting against clickjacking, cross-site scripting (XSS), and MIME-sniffing attacks.</p>
+                            </div>
+
+                            <div className="why-card">
+                                <h3>5. Basic Server Misconfiguration Checks</h3>
+                                <p><strong>Significance:</strong> Look for <strong>information leakage</strong>. Revealing exact software versions or verbose error messages aids attackers during reconnaissance, allowing them to target specific known vulnerabilities.</p>
+                            </div>
+                        </div>
+
+                        <div className="conclusion-box-light">
+                            <p>
+                                <strong>Conclusion:</strong> Getting the fundamentals right eliminates a massive portion of the risk you face.
+                                This proactive assessment creates a clear, actionable checklist to harden your system *before* a malicious actor finds these weaknesses.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
                 <section>
                     <h2 className="section-title">6. Detailed Findings</h2>
 
@@ -269,6 +328,6 @@ export default function ScanReportDetail() {
                     <p className="footer-contact">support@alertmatrix.in | alertmatrix.in</p>
                 </footer>
             </main>
-        </div>
+        </div >
     );
 }

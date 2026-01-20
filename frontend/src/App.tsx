@@ -10,7 +10,9 @@ import { useAuthStore } from './store/authStore';
 import TermsModal from './components/TermsModal';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { token, user } = useAuthStore();
+  const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
+
   if (!token) {
     return <Navigate to="/login" replace />;
   }
@@ -26,6 +28,11 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/dashboard" replace />;
   }
   return children;
+};
+
+const HomeRedirect = () => {
+  const token = useAuthStore((state) => state.token);
+  return <Navigate to={token ? "/dashboard" : "/login"} replace />;
 };
 
 function App() {
@@ -63,7 +70,8 @@ function App() {
             <ScanDetail />
           </ProtectedRoute>
         } />
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<HomeRedirect />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );

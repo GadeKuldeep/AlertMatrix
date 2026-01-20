@@ -470,3 +470,70 @@
     font-size: 0.875rem;
     color: hsl(var(--primary));
 }
+
+/* Why Matters Section Styling */
+.why-matters-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.intro-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: hsl(var(--foreground));
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.why-card {
+    background: hsla(var(--primary) / 0.05);
+    border: 1px solid hsla(var(--primary) / 0.1);
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    transition: transform 0.2s ease;
+}
+
+.why-card:hover {
+    transform: translateY(-2px);
+    background: hsla(var(--primary) / 0.08);
+}
+
+.why-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: hsl(var(--primary));
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid hsla(var(--primary) / 0.2);
+    padding-bottom: 0.5rem;
+}
+
+.why-card p {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: hsl(var(--muted-foreground));
+}
+
+.conclusion-box-light {
+    margin-top: 1rem;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, hsla(var(--primary) / 0.1) 0%, hsla(var(--primary) / 0.05) 100%);
+    border-left: 4px solid hsl(var(--primary));
+    border-radius: 0 0.5rem 0.5rem 0;
+    font-style: italic;
+}
+
+.conclusion-box-light p {
+    font-size: 0.95rem;
+    color: hsl(var(--foreground));
+}
