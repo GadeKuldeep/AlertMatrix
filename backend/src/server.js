@@ -13,8 +13,13 @@ const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/alertmatri
 
 
 app.use(express.json());
-app.use(cors());
-app.use(helmet());
+app.use(cors({
+    origin: ['https://alertmatrix.netlify.app', 'http://localhost:5173'],
+    credentials: true
+}));
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 app.use(morgan('dev'));
 
 import authRoutes from './routes/authRoutes.js';

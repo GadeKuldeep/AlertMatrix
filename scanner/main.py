@@ -12,7 +12,18 @@ from checks.ssl_tls import perform_ssl_checks
 from checks.network import perform_network_checks
 from checks.web_http import perform_web_checks
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(title="AlertMatrix Scanner Service")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 executor = ThreadPoolExecutor(max_workers=20)
 
 class ScanRequest(BaseModel):
