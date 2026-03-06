@@ -2,7 +2,7 @@ import axios from 'axios';
 import Scan from '../models/Scan.js';
 import Domain from '../models/Domain.js';
 
-const SCANNER_URL = 'http://localhost:8000';
+const SCANNER_URL = process.env.SCANNER_URL || 'http://localhost:8000';
 
 
 

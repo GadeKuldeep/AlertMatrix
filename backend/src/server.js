@@ -31,14 +31,23 @@ app.get('/health', (req, res) => {
 });
 
 
-mongoose.connect(MONGO_URI)
-    .then(() => {
+mongoose.set('strictQuery', false);
+
+const connectDB = async () => {
+    try {
+        console.log('⏳ Connecting to MongoDB...');
+        await mongoose.connect(MONGO_URI);
         console.log('✅ Connected to MongoDB');
-        app.listen(PORT, () => {
-            console.log(`🚀 Server running on http://localhost:${PORT}`);
+
+        app.listen(PORT, '0.0.0.0', () => {
+            console.log(`🚀 Server running on port ${PORT}`);
         });
-    })
-    .catch((err) => {
-        console.error('❌ MongoDB Connection Error:', err);
+    } catch (err) {
+        console.error('❌ MongoDB Connection Error:', err.message);
+        console.error('⚠️ Make sure your MONGO_URI is correctly set in your environment variables.');
+        // Don't exit immediately in some cases, but for this app the DB is critical
         process.exit(1);
-    });
+    }
+};
+
+connectDB();
