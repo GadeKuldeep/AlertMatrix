@@ -5,9 +5,9 @@ import { ArrowLeft, CheckCircle, AlertTriangle, XCircle, Shield } from 'lucide-r
 import './ScanDetail.css';
 
 export default function ScanReportDetail() {
-    const { id } = useParams<{ id: string }>();
+    const { id } = useParams();
     const navigate = useNavigate();
-    const [scan, setScan] = useState<any>(null);
+    const [scan, setScan] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const fetchScanDetail = async () => {
@@ -28,21 +28,21 @@ export default function ScanReportDetail() {
     if (loading) return <div className="loading-state">Loading Report...</div>;
     if (!scan) return <div className="error-state">Report not found</div>;
 
-    const getStatusColor = (score: number) => {
+    const getStatusColor = (score) => {
         if (score <= 30) return 'text-green-500';
         if (score <= 70) return 'text-yellow-500';
         return 'text-red-500';
     };
 
-    const getStatusText = (score: number) => {
+    const getStatusText = (score) => {
         if (score <= 30) return 'Secure';
         if (score <= 70) return 'Attention Required';
         return 'High Risk';
     };
 
-    const countSeverity = (severity: string) => scan.findings.filter((f: any) => f.severity === severity).length;
+    const countSeverity = (severity) => scan.findings.filter((f) => f.severity === severity).length;
 
-    const enrichedFindings = scan.findings.map((f: any) => {
+    const enrichedFindings = scan.findings.map((f) => {
         const advice = {
             why: "This vulnerability exposes your users to potential attacks and indicates a security misconfiguration.",
             rec: "Remediate this issue according to standard security practices."
@@ -272,7 +272,7 @@ export default function ScanReportDetail() {
                         <p className="text-muted-foreground text-italic">No security findings were detected during this scan.</p>
                     ) : (
                         <div className="findings-list">
-                            {enrichedFindings.map((finding: any, idx: number) => (
+                            {enrichedFindings.map((finding, idx) => (
                                 <div key={idx} className="finding-card">
                                     <div className={`finding-header ${finding.severity === 'critical' ? 'bg-red-900/20' :
                                         finding.severity === 'high' ? 'bg-primary/20' : 'bg-yellow-900/20'

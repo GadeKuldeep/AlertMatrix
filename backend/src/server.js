@@ -17,9 +17,9 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
 
-import authRoutes from './routes/authRoutes';
-import domainRoutes from './routes/domainRoutes';
-import scanRoutes from './routes/scanRoutes';
+import authRoutes from './routes/authRoutes.js';
+import domainRoutes from './routes/domainRoutes.js';
+import scanRoutes from './routes/scanRoutes.js';
 
 app.use('/api/auth', authRoutes);
 app.use('/api/domains', domainRoutes);

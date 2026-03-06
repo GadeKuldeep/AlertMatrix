@@ -12,10 +12,9 @@ const loginSchema = z.object({
     password: z.string().min(1, 'Password is required'),
 });
 
-type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(loginSchema),
     });
     const [loading, setLoading] = useState(false);
@@ -23,14 +22,14 @@ export default function LoginPage() {
     const navigate = useNavigate();
     const setCredentials = useAuthStore((state) => state.setCredentials);
 
-    const onSubmit = async (data: LoginFormData) => {
+    const onSubmit = async (data) => {
         setLoading(true);
         setError('');
         try {
             const response = await api.post('/auth/login', data);
             setCredentials(response.data, response.data.token);
             navigate('/dashboard');
-        } catch (err: any) {
+        } catch (err) {
             setError(err.response?.data?.message || 'Login failed');
         } finally {
             setLoading(false);

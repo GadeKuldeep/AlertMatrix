@@ -9,14 +9,6 @@ import { useAuthStore } from '../store/authStore';
 import './Domains.css';
 
 
-interface Domain {
-    _id: string;
-    domain: string;
-    isVerified: boolean;
-    verificationToken: string;
-    riskScore?: number;
-}
-
 const domainSchema = z.object({
     domain: z.string()
         .transform((val) => {
@@ -31,14 +23,13 @@ const domainSchema = z.object({
         .pipe(z.string().min(3, 'Domain is required').regex(/^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/, 'Invalid domain format')),
 });
 
-type DomainFormData = z.infer<typeof domainSchema>;
 
 export default function Domains() {
     const { user, logout } = useAuthStore();
     const navigate = useNavigate();
-    const [domains, setDomains] = useState<Domain[]>([]);
+    const [domains, setDomains] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<DomainFormData>({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         resolver: zodResolver(domainSchema),
     });
 
@@ -62,42 +53,42 @@ export default function Domains() {
         fetchDomains();
     }, []);
 
-    const onSubmit = async (data: DomainFormData) => {
+    const onSubmit = async (data) => {
         try {
             await api.post('/domains', data);
             reset();
             fetchDomains();
-        } catch (error: any) {
+        } catch (error) {
             alert(error.response?.data?.message || 'Failed to add domain');
         }
     };
 
-    const handleVerify = async (id: string) => {
+    const handleVerify = async (id) => {
         try {
             await api.post(`/domains/${id}/verify`);
             fetchDomains();
             alert('Domain verified successfully! You can now start the test.');
-        } catch (error: any) {
+        } catch (error) {
             alert(error.response?.data?.message || 'Verification failed');
         }
     };
 
-    const handleDelete = async (id: string) => {
+    const handleDelete = async (id) => {
         if (!confirm('Are you sure?')) return;
         try {
             await api.delete(`/domains/${id}`);
             fetchDomains();
-        } catch (error: any) {
+        } catch (error) {
             alert(error.response?.data?.message || 'Delete failed');
         }
     };
 
-    const handleScan = async (id: string) => {
+    const handleScan = async (id) => {
         try {
             if (!confirm('Start a new security scan for this domain?')) return;
             await api.post('/scans', { domainId: id });
             alert('Scan started successfully! Check Reports page for details.');
-        } catch (error: any) {
+        } catch (error) {
             alert(error.response?.data?.message || 'Scan failed to start');
         }
     };

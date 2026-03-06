@@ -1,6 +1,6 @@
 import express from 'express';
-import { getDomains, addDomain, verifyDomain, deleteDomain } from '../controllers/domainController';
-import { protect } from '../middleware/authMiddleware';
+import { getDomains, addDomain, verifyDomain, deleteDomain } from '../controllers/domainController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 

@@ -1,13 +1,12 @@
-import { Request, Response } from 'express';
-import Domain from '../models/Domain';
-import User from '../models/User';
+import Domain from '../models/Domain.js';
+import User from '../models/User.js';
 import crypto from 'crypto';
 import dns from 'dns';
 import { promisify } from 'util';
 
 const resolveTxt = promisify(dns.resolveTxt);
 
-const PLAN_LIMITS: { [key: string]: number } = {
+const PLAN_LIMITS = {
     starter: 1,
     growth: 7,
     business: 11,
@@ -17,11 +16,11 @@ const PLAN_LIMITS: { [key: string]: number } = {
 
 
 
-export const getDomains = async (req: Request, res: Response) => {
+export const getDomains = async (req, res) => {
     try {
-        const domains = await Domain.find({ user: (req as any).user._id });
+        const domains = await Domain.find({ user: req.user._id });
         res.json(domains);
-    } catch (error: any) {
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
@@ -29,11 +28,11 @@ export const getDomains = async (req: Request, res: Response) => {
 
 
 
-export const addDomain = async (req: Request, res: Response) => {
+export const addDomain = async (req, res) => {
     try {
         let { domain } = req.body;
         domain = domain.toLowerCase().trim().replace(/^https?:\/\//, '').split('/')[0];
-        const userId = (req as any).user._id;
+        const userId = req.user._id;
 
         const user = await User.findById(userId);
         if (!user) {
@@ -59,7 +58,7 @@ export const addDomain = async (req: Request, res: Response) => {
         });
 
         res.status(201).json(newDomain);
-    } catch (error: any) {
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
@@ -67,10 +66,10 @@ export const addDomain = async (req: Request, res: Response) => {
 
 
 
-export const verifyDomain = async (req: Request, res: Response) => {
+export const verifyDomain = async (req, res) => {
     try {
         const domainId = req.params.id;
-        const domainDoc = await Domain.findOne({ _id: domainId, user: (req as any).user._id });
+        const domainDoc = await Domain.findOne({ _id: domainId, user: req.user._id });
 
         if (!domainDoc) {
             res.status(404).json({ message: 'Domain not found' });
@@ -107,7 +106,7 @@ export const verifyDomain = async (req: Request, res: Response) => {
 
         }
 
-    } catch (error: any) {
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
@@ -115,11 +114,11 @@ export const verifyDomain = async (req: Request, res: Response) => {
 
 
 
-export const deleteDomain = async (req: Request, res: Response) => {
+export const deleteDomain = async (req, res) => {
     try {
         const domainId = req.params.id;
 
-        const domain = await Domain.findOneAndDelete({ _id: domainId, user: (req as any).user._id });
+        const domain = await Domain.findOneAndDelete({ _id: domainId, user: req.user._id });
 
         if (!domain) {
             res.status(404).json({ message: 'Domain not found' });
@@ -127,7 +126,7 @@ export const deleteDomain = async (req: Request, res: Response) => {
         }
 
         res.json({ message: 'Domain removed' });
-    } catch (error: any) {
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };

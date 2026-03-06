@@ -1,6 +1,6 @@
 import express from 'express';
-import { triggerScan, getScans, getScanById } from '../controllers/scanController';
-import { protect } from '../middleware/authMiddleware';
+import { triggerScan, getScans, getScanById } from '../controllers/scanController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 

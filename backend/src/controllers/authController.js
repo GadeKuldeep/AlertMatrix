@@ -1,9 +1,8 @@
-import { Request, Response } from 'express';
-import User from '../models/User';
+import User from '../models/User.js';
 import jwt from 'jsonwebtoken';
 import { z, ZodError } from 'zod';
 
-const generateToken = (id: string) => {
+const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET || 'secret', {
         expiresIn: '30d',
     });
@@ -24,7 +23,7 @@ const loginSchema = z.object({
 
 
 
-export const registerUser = async (req: Request, res: Response): Promise<void> => {
+export const registerUser = async (req, res) => {
     try {
         const { email, password, mobile } = registerSchema.parse(req.body);
 
@@ -53,12 +52,12 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
         } else {
             res.status(400).json({ message: 'Invalid user data' });
         }
-    } catch (error: unknown) {
+    } catch (error) {
         if (error instanceof ZodError) {
-            const errorMessage = error.issues.map((e: any) => e.message).join(', ');
+            const errorMessage = error.issues.map((e) => e.message).join(', ');
             res.status(400).json({ message: errorMessage });
         } else {
-            res.status(500).json({ message: (error as Error).message });
+            res.status(500).json({ message: error.message });
         }
     }
 };
@@ -66,13 +65,13 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
 
 
 
-export const loginUser = async (req: Request, res: Response): Promise<void> => {
+export const loginUser = async (req, res) => {
     try {
         const { email, password } = loginSchema.parse(req.body);
 
         const user = await User.findOne({ email });
 
-        if (user && (await (user as any).matchPassword(password))) {
+        if (user && (await user.matchPassword(password))) {
             res.json({
                 _id: user._id,
                 email: user.email,
@@ -84,19 +83,19 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         } else {
             res.status(401).json({ message: 'Invalid email or password' });
         }
-    } catch (error: unknown) {
+    } catch (error) {
         if (error instanceof ZodError) {
-            const errorMessage = error.issues.map((e: any) => e.message).join(', ');
+            const errorMessage = error.issues.map((e) => e.message).join(', ');
             res.status(400).json({ message: errorMessage });
         } else {
-            res.status(500).json({ message: (error as Error).message });
+            res.status(500).json({ message: error.message });
         }
     }
 };
 
-export const acceptTerms = async (req: Request, res: Response): Promise<void> => {
+export const acceptTerms = async (req, res) => {
     try {
-        const userId = (req as any).user?._id;
+        const userId = req.user?._id;
         if (!userId) {
             res.status(401).json({ message: 'Not authorized' });
             return;
@@ -115,7 +114,7 @@ export const acceptTerms = async (req: Request, res: Response): Promise<void> =>
             message: 'Terms accepted successfully',
             termsAccepted: user.termsAccepted,
         });
-    } catch (error: unknown) {
-        res.status(500).json({ message: (error as Error).message });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };

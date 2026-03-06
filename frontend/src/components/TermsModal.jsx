@@ -3,7 +3,7 @@ import './TermsModal.css';
 import { useAuthStore } from '../store/authStore';
 import api from '../lib/api';
 
-const TermsModal: React.FC = () => {
+const TermsModal = () => {
     const { user, token, setCredentials } = useAuthStore();
 
     if (!user || user.termsAccepted) return null;
@@ -13,7 +13,7 @@ const TermsModal: React.FC = () => {
             const response = await api.post('/auth/accept-terms');
 
             if (response.status === 200) {
-                setCredentials({ ...user, termsAccepted: true }, token!);
+                setCredentials({ ...user, termsAccepted: true }, token);
             }
         } catch (error) {
             console.error('Error accepting terms:', error);

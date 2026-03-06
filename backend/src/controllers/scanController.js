@@ -1,17 +1,16 @@
-import { Request, Response } from 'express';
 import axios from 'axios';
-import Scan from '../models/Scan';
-import Domain from '../models/Domain';
+import Scan from '../models/Scan.js';
+import Domain from '../models/Domain.js';
 
 const SCANNER_URL = 'http://localhost:8000';
 
 
 
 
-export const triggerScan = async (req: Request, res: Response) => {
+export const triggerScan = async (req, res) => {
     try {
         const { domainId } = req.body;
-        const userId = (req as any).user._id;
+        const userId = req.user._id;
 
         const domainDoc = await Domain.findOne({ _id: domainId, user: userId });
         if (!domainDoc) {
@@ -51,14 +50,14 @@ export const triggerScan = async (req: Request, res: Response) => {
 
             res.json(scan);
 
-        } catch (scannerError: any) {
+        } catch (scannerError) {
             console.error('Scanner Service Error:', scannerError.message);
             scan.status = 'failed';
             await scan.save();
             res.status(503).json({ message: 'Scanner service failed', error: scannerError.message });
         }
 
-    } catch (error: any) {
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
@@ -66,11 +65,11 @@ export const triggerScan = async (req: Request, res: Response) => {
 
 
 
-export const getScans = async (req: Request, res: Response) => {
+export const getScans = async (req, res) => {
     try {
         const { domainId } = req.params;
 
-        const domain = await Domain.findOne({ _id: domainId, user: (req as any).user._id });
+        const domain = await Domain.findOne({ _id: domainId, user: req.user._id });
         if (!domain) {
             res.status(404).json({ message: 'Domain not found' });
             return;
@@ -78,7 +77,7 @@ export const getScans = async (req: Request, res: Response) => {
 
         const scans = await Scan.find({ domain: domainId }).sort({ startedAt: -1 });
         res.json(scans);
-    } catch (error: any) {
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
@@ -86,17 +85,17 @@ export const getScans = async (req: Request, res: Response) => {
 
 
 
-export const getScanById = async (req: Request, res: Response) => {
+export const getScanById = async (req, res) => {
     try {
         const { id } = req.params;
-        const scan = await Scan.findOne({ _id: id, user: (req as any).user._id }).populate('domain');
+        const scan = await Scan.findOne({ _id: id, user: req.user._id }).populate('domain');
 
         if (!scan) {
             res.status(404).json({ message: 'Scan not found' });
             return;
         }
         res.json(scan);
-    } catch (error: any) {
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };

@@ -17,10 +17,9 @@ const registerSchema = z.object({
     path: ["confirmPassword"],
 });
 
-type RegisterFormData = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
-    const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormData>({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(registerSchema),
     });
     const [loading, setLoading] = useState(false);
@@ -28,7 +27,7 @@ export default function RegisterPage() {
     const navigate = useNavigate();
     const setCredentials = useAuthStore((state) => state.setCredentials);
 
-    const onSubmit = async (data: RegisterFormData) => {
+    const onSubmit = async (data) => {
         setLoading(true);
         setError('');
         try {
@@ -36,7 +35,7 @@ export default function RegisterPage() {
             const response = await api.post('/auth/register', registerData);
             setCredentials(response.data, response.data.token);
             navigate('/dashboard');
-        } catch (err: any) {
+        } catch (err) {
             setError(err.response?.data?.message || 'Registration failed');
         } finally {
             setLoading(false);
