@@ -2,6 +2,8 @@
 
 **AlertMatrix** is a modern automated **security scanning platform** that analyzes domains for potential security risks across multiple layers including **DNS configuration, SSL/TLS security, network exposure, and web server protections**.
 
+🔗 **Live Demo:** [alertmatrix.netlify.app](https://alertmatrix.netlify.app)
+
 The project follows a **microservices architecture** combining:
 
 - ⚛️ React (Vite) for the frontend dashboard
