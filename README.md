@@ -4,6 +4,12 @@
 
 🔗 **Live Demo:** [alertmatrix.netlify.app](https://alertmatrix.netlify.app)
 
+
+## 📸 Screenshots
+### Security Report Dashboard
+![AlertMatrix Security Report](./screenshots/report.png)
+
+
 The project follows a **microservices architecture** combining:
 
 - ⚛️ React (Vite) for the frontend dashboard
