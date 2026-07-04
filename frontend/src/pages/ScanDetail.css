@@ -1,6 +1,8 @@
 .scan-report-page {
     min-height: 100vh;
-    background-color: transparent;
+    background-color: #000000;
+    position: relative;
+    z-index: 10;
     color: hsl(var(--foreground));
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
@@ -27,7 +29,9 @@
 .loading-state,
 .error-state {
     min-height: 100vh;
-    background-color: hsl(var(--background));
+    background-color: #000000;
+    position: relative;
+    z-index: 10;
     color: white;
     display: flex;
     align-items: center;
