@@ -1,0 +1,140 @@
+.spectral-canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.spectral-background-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Gear Toggle Button */
+.spectral-gui-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(13, 23, 42, 0.75);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  color: #00d4ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 9999;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+.spectral-gui-toggle:hover {
+  background: rgba(0, 212, 255, 0.15);
+  border-color: #00ffaa;
+  color: #00ffaa;
+  transform: scale(1.15) rotate(45deg);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 255, 170, 0.4);
+}
+
+.spectral-gui-toggle:active {
+  transform: scale(0.95);
+}
+
+.gear-icon {
+  transition: transform 0.2s ease;
+}
+
+.gear-icon.spin {
+  animation: gearSpinAnim 6s linear infinite;
+}
+
+@keyframes gearSpinAnim {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tweakpane Container Styling */
+.spectral-pane-container {
+  position: fixed;
+  bottom: 74px;
+  right: 24px;
+  width: 280px;
+  max-height: 70vh;
+  overflow-y: auto;
+  pointer-events: auto;
+  z-index: 9998;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: blur(12px) saturate(180%);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  padding: 10px;
+}
+
+.spectral-pane-container.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Customize internal tweakpane styles for matching premium cyber style */
+.spectral-pane-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.spectral-pane-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.spectral-pane-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.3);
+  border-radius: 10px;
+}
+
+/* Tweakpane Custom Theme Overrides */
+.tp-dfv {
+  background-color: transparent !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 11px !important;
+}
+
+.tp-fldv_t {
+  color: #00d4ff !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.tp-lblv_l {
+  color: #9ca3af !important;
+}
+
+.tp-btnv_b {
+  background-color: rgba(0, 212, 255, 0.1) !important;
+  border: 1px solid rgba(0, 212, 255, 0.3) !important;
+  color: #00d4ff !important;
+  border-radius: 4px !important;
+}
+
+.tp-btnv_b:hover {
+  background-color: rgba(0, 255, 170, 0.15) !important;
+  border-color: #00ffaa !important;
+  color: #00ffaa !important;
+}

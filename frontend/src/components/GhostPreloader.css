@@ -1,0 +1,179 @@
+/* Preloader Styles */
+.preloader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #0e1726 0%, #030712 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  opacity: 1;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 1s ease;
+  backdrop-filter: blur(10px);
+}
+
+.preloader-overlay.fade-out {
+  opacity: 0;
+  pointer-events: none;
+  backdrop-filter: blur(0px);
+}
+
+.preloader-content-wrapper {
+  text-align: center;
+  color: #f3f4f6;
+  max-width: 500px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.ghost-loader-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ghost-svg-loader {
+  filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.45));
+  animation: ghostFloatAnim 2.8s ease-in-out infinite;
+}
+
+.ghost-body-path {
+  fill: #0d1e36;
+  stroke: #00d4ff;
+  stroke-width: 12;
+  opacity: 0.95;
+}
+
+.ghost-eye-path {
+  fill: #00d4ff;
+  animation: eyePulseAnim 1.8s ease-in-out infinite;
+  transform-origin: center;
+  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.8));
+}
+
+.ghost-eye-path.left {
+  animation-delay: 0s;
+  transform-origin: 208px 225px;
+}
+
+.ghost-eye-path.right {
+  animation-delay: 0.15s;
+  transform-origin: 297px 225px;
+}
+
+@keyframes ghostFloatAnim {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(2deg);
+  }
+}
+
+@keyframes eyePulseAnim {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+    fill: #00ffaa;
+  }
+}
+
+/* Atmospheric Quote */
+.atmospheric-quote {
+  margin-top: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.quote-heading {
+  font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: 0.18em;
+  background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.quote-author {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: #00d4ff;
+  opacity: 0.8;
+  animation: textPulseAnim 2.2s ease-in-out infinite;
+}
+
+@keyframes textPulseAnim {
+  0%, 100% {
+    opacity: 0.6;
+    text-shadow: 0 0 2px rgba(0, 212, 255, 0);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+  }
+}
+
+/* Progress Section */
+.progress-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.status-label-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-align: left;
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00d4ff, #00ffaa);
+  border-radius: 9999px;
+  width: 0%;
+  transition: width 0.4s cubic-bezier(0.1, 0.8, 0.2, 1);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.progress-percentage {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  color: #00d4ff;
+  text-align: right;
+  font-weight: bold;
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
@@ -8,6 +8,8 @@ import Reports from './pages/Reports';
 import ScanDetail from './pages/ScanDetail';
 import { useAuthStore } from './store/authStore';
 import TermsModal from './components/TermsModal';
+import GhostPreloader from './components/GhostPreloader';
+import SpectralBackground from './components/SpectralBackground';
 
 const ProtectedRoute = ({ children }) => {
     const token = useAuthStore((state) => state.token);
@@ -36,45 +38,55 @@ const HomeRedirect = () => {
 };
 
 function App() {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/login" element={
-                    <PublicRoute>
-                        <LoginPage />
-                    </PublicRoute>
-                } />
-                <Route path="/register" element={
-                    <PublicRoute>
-                        <RegisterPage />
-                    </PublicRoute>
-                } />
-                <Route path="/dashboard" element={
-                    <ProtectedRoute>
-                        <Dashboard />
-                    </ProtectedRoute>
-                } />
+    const [isAppLoaded, setIsAppLoaded] = useState(false);
 
-                <Route path="/domains" element={
-                    <ProtectedRoute>
-                        <Domains />
-                    </ProtectedRoute>
-                } />
-                <Route path="/reports" element={
-                    <ProtectedRoute>
-                        <Reports />
-                    </ProtectedRoute>
-                } />
-                <Route path="/reports/:id" element={
-                    <ProtectedRoute>
-                        <ScanDetail />
-                    </ProtectedRoute>
-                } />
-                <Route path="/" element={<HomeRedirect />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-        </Router>
+    return (
+        <>
+            {!isAppLoaded && <GhostPreloader onComplete={() => setIsAppLoaded(true)} />}
+            
+            {/* The live Three.js Spectral Ghost canvas starts rendering in the background after the preloader */}
+            <SpectralBackground />
+            
+            <Router>
+                <Routes>
+                    <Route path="/login" element={
+                        <PublicRoute>
+                            <LoginPage />
+                        </PublicRoute>
+                    } />
+                    <Route path="/register" element={
+                        <PublicRoute>
+                            <RegisterPage />
+                        </PublicRoute>
+                    } />
+                    <Route path="/dashboard" element={
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    } />
+
+                    <Route path="/domains" element={
+                        <ProtectedRoute>
+                            <Domains />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/reports" element={
+                        <ProtectedRoute>
+                            <Reports />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/reports/:id" element={
+                        <ProtectedRoute>
+                            <ScanDetail />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/" element={<HomeRedirect />} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+            </Router>
+        </>
     );
 }
 
 export default App;
+

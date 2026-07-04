@@ -1,14 +1,15 @@
 .dashboard-layout {
     display: flex;
     min-height: 100vh;
-    background-color: hsl(var(--background));
+    background-color: transparent;
     color: hsl(var(--foreground));
 }
 
 .sidebar {
     width: 16rem;
-    border-right: 1px solid hsl(var(--border));
-    background-color: hsl(var(--card));
+    border-right: 1px solid rgba(0, 212, 255, 0.15);
+    background-color: rgba(3, 7, 18, 0.5);
+    backdrop-filter: blur(16px);
     display: none;
 }
 
@@ -123,7 +124,7 @@
 
 .main-content {
     flex: 1;
-    background-color: hsl(var(--background));
+    background-color: transparent;
     overflow-y: auto;
 }
 
@@ -178,17 +179,19 @@
 }
 
 .stat-card {
-    background-color: hsl(var(--card));
+    background-color: rgba(3, 7, 18, 0.6);
+    backdrop-filter: blur(12px);
     padding: 1.5rem;
     border-radius: 0.75rem;
-    border: 1px solid hsl(var(--border));
+    border: 1px solid rgba(0, 212, 255, 0.15);
     position: relative;
     overflow: hidden;
-    transition: box-shadow 0.2s;
+    transition: all 0.3s ease;
 }
 
 .stat-card:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 212, 255, 0.4);
+    box-shadow: 0 10px 25px -5px rgba(0, 212, 255, 0.1);
 }
 
 .stat-icon-bg {
@@ -255,9 +258,10 @@
 }
 
 .action-card {
-    background-color: hsl(var(--card));
+    background-color: rgba(3, 7, 18, 0.6);
+    backdrop-filter: blur(12px);
     border-radius: 0.75rem;
-    border: 1px solid hsl(var(--border));
+    border: 1px solid rgba(0, 212, 255, 0.15);
     padding: 1.5rem;
 }
 
@@ -325,9 +329,10 @@
 }
 
 .placeholder-card {
-    background-color: hsl(var(--card));
+    background-color: rgba(3, 7, 18, 0.6);
+    backdrop-filter: blur(12px);
     border-radius: 0.75rem;
-    border: 1px solid hsl(var(--border));
+    border: 1px solid rgba(0, 212, 255, 0.15);
     padding: 1.5rem;
     display: flex;
     align-items: center;
